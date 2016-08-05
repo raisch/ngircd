@@ -51,6 +51,11 @@ GLOBAL bool NGIRCd_Sniffer;
  */
 GLOBAL bool NGIRCd_Passive;
 
+/**
+ * Flag indicating if monitor should be activated (false default)
+ */
+GLOBAL bool NGIRCd_Monitor;
+
 /** Flag indicating that ngIRCd has been requested to quit (true) */
 GLOBAL bool NGIRCd_SignalQuit;
 

@@ -42,6 +42,8 @@
 #include "sighandlers.h"
 #include "io.h"
 
+#include "monitor.h"
+
 #include "ngircd.h"
 
 static void Show_Version PARAMS(( void ));
@@ -135,6 +137,10 @@ main(int argc, const char *argv[])
 				NGIRCd_Passive = true;
 				ok = true;
 			}
+      if (strcmp(argv[i], "--monitor") == 0) {
+        NGIRCd_Monitor = true;
+        ok = true;
+      }
 #ifdef SNIFFER
 			if (strcmp(argv[i], "--sniffer") == 0) {
 				NGIRCd_Sniffer = true;
@@ -183,6 +189,10 @@ main(int argc, const char *argv[])
 					NGIRCd_Passive = true;
 					ok = true;
 				}
+        if (argv[i][n] == 'm') {
+          NGIRCd_Monitor = true;
+          ok = true;
+        }
 #ifdef SNIFFER
 				if (argv[i][n] == 's') {
 					NGIRCd_Sniffer = true;
@@ -472,6 +482,7 @@ Show_Help( void )
 	puts( "  -f, --config <f>   use file <f> as configuration file" );
 	puts( "  -n, --nodaemon     don't fork and don't detach from controlling terminal" );
 	puts( "  -p, --passive      disable automatic connections to other servers" );
+  puts( "  -m, --monitor      enables msg output to mongod");
 #ifdef SNIFFER
 	puts( "  -s, --sniffer      enable network sniffer and display all IRC traffic" );
 #endif
@@ -811,6 +822,13 @@ NGIRCd_Init(bool NGIRCd_NoDaemon)
 
 	/* Change working directory to home directory of the user we are
 	 * running as (only when running in daemon mode and not in chroot) */
+
+  if(-1==Monitor_Init()){
+    Log(LOG_ERR,"Failed to init monitor")
+  }
+  else {
+    Log(LOG_INFO,"Monitor initialized");
+  }
 
 	if (NGIRCd_NoDaemon)
 		return true;
