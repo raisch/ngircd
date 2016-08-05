@@ -7,11 +7,11 @@ __ng_Makefile_am_template__
 
 EXTRA_DIST = Makefile.ng
 
-# AM_CPPFLAGS = -I$(srcdir)/../portab
+AM_CPPFLAGS = -I$(srcdir)/../portab -I/usr/local/include/libbson-1.0 -I/usr/local/include/libmongoc-1.0
 
 noinst_LIBRARIES = libmonitor.a
 
-libngipaddr_a_SOURCES = monitor.c
+libmonitor_a_SOURCES = monitor.c
 
 noinst_HEADERS = monitor.h
 

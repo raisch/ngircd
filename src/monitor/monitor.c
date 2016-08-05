@@ -4,6 +4,8 @@
 #include <bson.h>
 #include <mongoc.h>
 
+#include "monitor.h"
+
 #define clrErrorMsg() MonitorLastError[0]='\0'
 
 #define setErrorMsg(S) strlcpy(MonitorLastError, S, sizeof(MonitorLastError))
@@ -12,7 +14,7 @@
  * Create and initialize monitor database connection.
  * Returns -1 on error, with reason in MonitorLastError
  */
-GLOBAL void 
+GLOBAL int 
 Monitor_Init() {
 
   clrErrorMsg();
@@ -87,7 +89,7 @@ Monitor_Write( bson_t *doc ) {
   }
 
   if (!mongoc_collection_insert (MonitorCollection, MONGOC_INSERT_NONE, doc, NULL, &error)) {
-    setErrMsg(error.message);
+    setErrorMsg(error.message);
     fprintf (stderr, "%s\n", error.message);
     return -1;
   }
