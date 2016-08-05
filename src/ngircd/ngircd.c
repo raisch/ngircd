@@ -42,7 +42,7 @@
 #include "sighandlers.h"
 #include "io.h"
 
-#include "monitor.h"
+#include "../monitor/monitor.h"
 
 #include "ngircd.h"
 
