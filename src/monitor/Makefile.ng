@@ -1,0 +1,21 @@
+#
+# monitor/Makefile.am
+# (c) 2016 Rob Raisch <raisch@gmail.com>
+#
+
+__ng_Makefile_am_template__
+
+EXTRA_DIST = Makefile.ng
+
+# AM_CPPFLAGS = -I$(srcdir)/../portab
+
+noinst_LIBRARIES = libmonitor.a
+
+libngipaddr_a_SOURCES = monitor.c
+
+noinst_HEADERS = monitor.h
+
+maintainer-clean-local:
+	rm -f Makefile Makefile.in Makefile.am
+
+# -eof-

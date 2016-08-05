@@ -11,7 +11,7 @@
 # $Id: Makefile.am,v 1.8 2008/02/26 22:04:15 fw Exp $
 #
 
-SUBDIRS = portab tool ipaddr ngircd testsuite
+SUBDIRS = portab tool ipaddr ngircd testsuite monitor
 
 maintainer-clean-local:
 	rm -f Makefile Makefile.in config.h config.h.in stamp-h.in

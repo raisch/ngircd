@@ -667,6 +667,7 @@ AC_CONFIG_FILES([ \
 	src/portab/Makefile \
 	src/testsuite/Makefile \
 	src/tool/Makefile \
+  src/monitor/Makefile \
 ])
 
 AC_OUTPUT
