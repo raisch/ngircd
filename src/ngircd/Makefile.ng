@@ -65,7 +65,9 @@ ngircd_SOURCES = \
 ngircd_LDFLAGS = -L../portab -L../tool -L../ipaddr \
 	-L/usr/lib64
 
-ngircd_LDADD = -lngportab -lngtool -lngipaddr
+ngircd_LDADD = -lngportab -lngtool -lngipaddr \
+	-lbson-1.0 \
+	-lmongoc-1.0
 
 noinst_HEADERS = \
 	ngircd.h \

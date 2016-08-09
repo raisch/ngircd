@@ -41,7 +41,6 @@
 #include "log.h"
 #include "sighandlers.h"
 #include "io.h"
-
 #include "monitor.h"
 
 #include "ngircd.h"
