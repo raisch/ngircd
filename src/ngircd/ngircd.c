@@ -42,7 +42,7 @@
 #include "sighandlers.h"
 #include "io.h"
 
-#include "../monitor/monitor.h"
+#include "monitor.h"
 
 #include "ngircd.h"
 
@@ -824,7 +824,7 @@ NGIRCd_Init(bool NGIRCd_NoDaemon)
 	 * running as (only when running in daemon mode and not in chroot) */
 
   if(-1==Monitor_Init()){
-    Log(LOG_ERR,"Failed to init monitor")
+    Log(LOG_ERR,"Failed to init monitor");
   }
   else {
     Log(LOG_INFO,"Monitor initialized");

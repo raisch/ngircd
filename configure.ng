@@ -666,8 +666,7 @@ AC_CONFIG_FILES([ \
 	src/ngircd/Makefile \
 	src/portab/Makefile \
 	src/testsuite/Makefile \
-	src/tool/Makefile \
-  src/monitor/Makefile \
+	src/tool/Makefile 
 ])
 
 AC_OUTPUT

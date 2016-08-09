@@ -57,7 +57,8 @@ ngircd_SOURCES = \
 	parse.c \
 	proc.c \
 	resolve.c \
-	sighandlers.c
+	sighandlers.c \
+  monitor.c
 
 ngircd_LDFLAGS = -L../portab -L../tool -L../ipaddr
 
@@ -104,7 +105,8 @@ noinst_HEADERS = \
 	parse.h \
 	proc.h \
 	resolve.h \
-	sighandlers.h
+	sighandlers.h \
+  monitor.h
 
 clean-local:
 	rm -f check-version check-help lint.out

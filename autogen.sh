@@ -171,7 +171,7 @@ ifs=$IFS; IFS="."; set $AM_VERSION; IFS=$ifs
 AM_MAJOR="$1"; AM_MINOR="$2"; AM_PATCHLEVEL="$3"
 echo "Detected automake $AM_VERSION ..."
 
-AM_MAKEFILES="src/ipaddr/Makefile.ng src/ngircd/Makefile.ng src/testsuite/Makefile.ng src/tool/Makefile.ng src/monitor/Makefile.ng"
+AM_MAKEFILES="src/ipaddr/Makefile.ng src/ngircd/Makefile.ng src/testsuite/Makefile.ng src/tool/Makefile.ng"
 
 # De-ANSI-fication?
 if [ "$AM_MAJOR" -eq "1" -a "$AM_MINOR" -lt "12" ]; then
