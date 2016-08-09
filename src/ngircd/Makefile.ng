@@ -13,7 +13,9 @@ __ng_Makefile_am_template__
 
 EXTRA_DIST = Makefile.ng
 
-AM_CPPFLAGS = -I$(srcdir)/../portab -I$(srcdir)/../tool -I$(srcdir)/../ipaddr
+AM_CPPFLAGS = -I$(srcdir)/../portab -I$(srcdir)/../tool -I$(srcdir)/../ipaddr \
+	-I/usr/include/libbson-1.0 \
+	-I/usr/include/libmongoc-1.0
 
 LINTARGS = -weak -warnunixlib +unixlib -booltype BOOLEAN \
  -varuse -retvalother -emptyret -unrecog
@@ -58,9 +60,10 @@ ngircd_SOURCES = \
 	proc.c \
 	resolve.c \
 	sighandlers.c \
-  monitor.c
+	monitor.c
 
-ngircd_LDFLAGS = -L../portab -L../tool -L../ipaddr
+ngircd_LDFLAGS = -L../portab -L../tool -L../ipaddr \
+	-L/usr/lib64
 
 ngircd_LDADD = -lngportab -lngtool -lngipaddr
 
@@ -106,7 +109,7 @@ noinst_HEADERS = \
 	proc.h \
 	resolve.h \
 	sighandlers.h \
-  monitor.h
+	monitor.h
 
 clean-local:
 	rm -f check-version check-help lint.out
