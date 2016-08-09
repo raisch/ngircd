@@ -823,8 +823,8 @@ NGIRCd_Init(bool NGIRCd_NoDaemon)
 	 * running as (only when running in daemon mode and not in chroot) */
 
   if(NGIRCd_Monitor){
-    
-    Log(LOG_INFO,'Initializing monitor');
+
+    Log(LOG_INFO,"Initializing monitor");
 
     if(Monitor_Init() == -1){
       Log(LOG_ERR,"Failed to init monitor");
