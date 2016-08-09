@@ -822,11 +822,16 @@ NGIRCd_Init(bool NGIRCd_NoDaemon)
 	/* Change working directory to home directory of the user we are
 	 * running as (only when running in daemon mode and not in chroot) */
 
-  if(-1==Monitor_Init()){
-    Log(LOG_ERR,"Failed to init monitor");
-  }
-  else {
-    Log(LOG_INFO,"Monitor initialized");
+  if(NGIRCd_Monitor){
+    
+    Log(LOG_INFO,'Initializing monitor');
+
+    if(Monitor_Init() == -1){
+      Log(LOG_ERR,"Failed to init monitor");
+    }
+    else {
+      Log(LOG_INFO,"Monitor initialized");
+    }
   }
 
 	if (NGIRCd_NoDaemon)
