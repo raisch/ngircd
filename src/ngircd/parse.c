@@ -46,6 +46,8 @@
 #include "irc-write.h"
 #include "numeric.h"
 
+#include "monitor.h"
+
 struct _NUMERIC {
 	int numeric;
 	bool (*function) PARAMS(( CLIENT *Client, REQUEST *Request ));

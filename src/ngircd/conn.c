@@ -39,8 +39,6 @@
 #include <time.h>
 #include <netinet/in.h>
 
-#include <bson.h>
-
 #ifdef HAVE_NETINET_IP_H
 # ifdef HAVE_NETINET_IN_SYSTM_H
 #  include <netinet/in_systm.h>
