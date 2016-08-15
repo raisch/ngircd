@@ -876,19 +876,9 @@ va_dcl
 #endif
 
   /* RLR - WRITE TO MONITOR HERE */
-  if( NGIRCd_Monitor ) {
-    bson_t *doc;
-
-    doc = BCON_NEW ("conn", BCON_INT32 (Idx), "msg", BCON_UTF8 (buffer) );
-
-    Monitor_Write( doc );
-
-    bson_destroy( doc );
+  if( NGIRCd_Monitor ) 
+    Monitor_Write( Idx, buffer );
   }
-
-
-
-
 
 	len = strlcat( buffer, "\r\n", sizeof( buffer ));
 	ok = Conn_Write(Idx, buffer, len);

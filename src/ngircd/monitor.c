@@ -1,5 +1,6 @@
 
 #include "portab.h"
+#include "log.h"
 
 #include <bson.h>
 #include <mongoc.h>
@@ -97,9 +98,15 @@ Monitor_Close() {
  * Write document to monitor database.
  */
 GLOBAL int 
-Monitor_Write( bson_t *doc ) {
+Monitor_Write( int conn, char* msg ) {
 
   bson_error_t error;
+
+  bson_t *doc;
+
+  Log(LOG_ALERT, "writing msg '%s' to db", msg);
+
+  doc = BCON_NEW ( "conn", BCON_INT32(conn), BCON_UTF8(msg) );
 
   clrErrorMsg();
 
@@ -113,6 +120,8 @@ Monitor_Write( bson_t *doc ) {
     fprintf (stderr, "%s\n", error.message);
     return -1;
   }
+
+  bson_destroy(doc);
 
   return 0;
 }
