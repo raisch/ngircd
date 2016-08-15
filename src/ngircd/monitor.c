@@ -104,7 +104,7 @@ Monitor_Write( int conn, char* dir, char* msg ) {
   bson_oid_t oid;
   bson_t *doc;
 
-  Log(LOG_ALERT, "%s/%d: writing msg '%s' to db", dir, conn, msg);
+  Log(LOG_DEBUG, "%s/%d: writing msg '%s' to db", dir, conn, msg);
 
   doc = bson_new ();
   bson_oid_init (&oid, NULL);
@@ -122,7 +122,7 @@ Monitor_Write( int conn, char* dir, char* msg ) {
 
   if (!mongoc_collection_insert (MonitorCollection, MONGOC_INSERT_NONE, doc, NULL, &error)) {
     setErrorMsg(error.message);
-    Log(LOG_ERROR,"MONITOR ERROR: %s\n", error.message);
+    Log(LOG_ERR,"MONITOR ERROR: %s\n", error.message);
     return -1;
   }
 
