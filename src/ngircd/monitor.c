@@ -13,7 +13,7 @@
 GLOBAL char MonitorLastError[MAX_LINE_LEN];
 
 /** MongoDb connection uri */
-GLOBAL char MonitorConnectionStr[MAX_LINE_LEN] = "mongodb://localhost:27017/";
+GLOBAL char MonitorConnectionStr[MAX_LINE_LEN] = "mongodb://127.0.0.1:27017/";
 
 /** MongoDb database name */
 GLOBAL char MonitorDatabaseName[MAX_LINE_LEN] = "ngircd";
@@ -121,7 +121,7 @@ Monitor_Write( int conn, char* msg ) {
 
   if (!mongoc_collection_insert (MonitorCollection, MONGOC_INSERT_NONE, doc, NULL, &error)) {
     setErrorMsg(error.message);
-    fprintf (stderr, "%s\n", error.message);
+    fprintf (stderr, "MONITOR ERROR: %s\n", error.message);
     return -1;
   }
 
