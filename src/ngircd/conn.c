@@ -879,7 +879,7 @@ va_dcl
   if( NGIRCd_Monitor ) {
     bson_t *doc;
 
-    doc = BSON_NEW ("conn", BSON_INT32 (Idx), "msg", BSON_UTF8 (buffer) );
+    doc = BCON_NEW ("conn", BCON_INT32 (Idx), "msg", BCON_UTF8 (buffer) );
 
     Monitor_Write( doc );
 
