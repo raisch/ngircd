@@ -39,6 +39,8 @@
 #include <time.h>
 #include <netinet/in.h>
 
+#include <bson.h>
+
 #ifdef HAVE_NETINET_IP_H
 # ifdef HAVE_NETINET_IN_SYSTM_H
 #  include <netinet/in_systm.h>
@@ -65,6 +67,8 @@
 #include "ng_ipaddr.h"
 #include "parse.h"
 #include "resolve.h"
+
+#include "monitor.h"
 
 #define SERVER_WAIT (NONE - 1)		/** "Wait for outgoing connection" flag */
 
@@ -870,6 +874,21 @@ va_dcl
 	if (NGIRCd_Sniffer)
 		Log(LOG_DEBUG, " -> connection %d: '%s'.", Idx, buffer);
 #endif
+
+  /* RLR - WRITE TO MONITOR HERE */
+  if( NGIRCd_Monitor ) {
+    bson_t *doc;
+
+    doc = BSON_NEW ("conn", BCON_INT (Idx), "msg", BCON_UTF8 (buffer) );
+
+    Monitor_Write( doc );
+
+    bson_destroy( doc );
+  }
+
+
+
+
 
 	len = strlcat( buffer, "\r\n", sizeof( buffer ));
 	ok = Conn_Write(Idx, buffer, len);
