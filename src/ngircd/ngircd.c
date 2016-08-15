@@ -332,6 +332,12 @@ main(int argc, const char *argv[])
 		Log_Exit();
 		Signals_Exit();
 	}
+
+  if(NGIRCd_Monitor){
+    Log(LOG_INFO,"Disconnecting monitor");
+    Monitor_Close();
+  }
+
 	Pidfile_Delete();
 
 	return 0;
