@@ -261,6 +261,18 @@ main(int argc, const char *argv[])
 		Conf_Init();
 		Log_ReInit();
 
+    if(NGIRCd_Monitor){
+
+      Log(LOG_INFO,"Initializing monitor");
+
+      if(Monitor_Init() == -1){
+        Log(LOG_ERR,"Failed to init monitor");
+      }
+      else {
+        Log(LOG_INFO,"Monitor initialized");
+      }
+    }
+
 		/* Initialize the "main program": chroot environment, user and
 		 * group ID, ... */
 		if (!NGIRCd_Init(NGIRCd_NoDaemon)) {
@@ -326,17 +338,18 @@ main(int argc, const char *argv[])
 		Conn_Handler();
 
 		Conn_Exit();
-		Client_Exit();
-		Channel_Exit();
-		Class_Exit();
-		Log_Exit();
+
+    if(NGIRCd_Monitor){
+      Log(LOG_INFO,"Disconnecting monitor");
+      Monitor_Close();
+    }
+
+    Client_Exit();
+    Channel_Exit();
+    Class_Exit();
+    Log_Exit();
 		Signals_Exit();
 	}
-
-  if(NGIRCd_Monitor){
-    Log(LOG_INFO,"Disconnecting monitor");
-    Monitor_Close();
-  }
 
 	Pidfile_Delete();
 
@@ -802,18 +815,6 @@ NGIRCd_Init(bool NGIRCd_NoDaemon)
 		if (fd > 2)
 			close(fd);
 	}
-
-  if(NGIRCd_Monitor){
-
-    Log(LOG_INFO,"Initializing monitor");
-
-    if(Monitor_Init() == -1){
-      Log(LOG_ERR,"Failed to init monitor");
-    }
-    else {
-      Log(LOG_INFO,"Monitor initialized");
-    }
-  }
 
 	pid = getpid();
 
