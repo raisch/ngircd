@@ -876,7 +876,7 @@ va_dcl
 #endif
 
   /* RLR - WRITE TO MONITOR HERE */
-  if( NGIRCd_Monitor ) 
+  if( NGIRCd_Monitor ) {
     Monitor_Write( Idx, buffer );
   }
 
