@@ -8,7 +8,7 @@
 
 GLOBAL int Monitor_Init PARAMS(( void ));
 
-GLOBAL int Monitor_Write PARAMS(( int conn, char* msg ));
+GLOBAL int Monitor_Write PARAMS(( int conn, char* dir, char* msg ));
 
 GLOBAL void Monitor_Close PARAMS(( void ));
 

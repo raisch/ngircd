@@ -98,18 +98,19 @@ Monitor_Close() {
  * Write document to monitor database.
  */
 GLOBAL int 
-Monitor_Write( int conn, char* msg ) {
+Monitor_Write( int conn, char* dir, char* msg ) {
 
   bson_error_t error;
   bson_oid_t oid;
   bson_t *doc;
 
-  Log(LOG_ALERT, "writing msg '%s' to db", msg);
+  Log(LOG_ALERT, "%s/%d: writing msg '%s' to db", dir, conn, msg);
 
   doc = bson_new ();
   bson_oid_init (&oid, NULL);
   BSON_APPEND_OID (doc, "_id", &oid);
   BSON_APPEND_INT32(doc, "conn", conn);
+  BSON_APPEND_UTF8(doc, "dir", dir);
   BSON_APPEND_UTF8 (doc, "msg", msg);
 
   clrErrorMsg();
@@ -121,7 +122,7 @@ Monitor_Write( int conn, char* msg ) {
 
   if (!mongoc_collection_insert (MonitorCollection, MONGOC_INSERT_NONE, doc, NULL, &error)) {
     setErrorMsg(error.message);
-    fprintf (stderr, "MONITOR ERROR: %s\n", error.message);
+    Log(LOG_ERROR,"MONITOR ERROR: %s\n", error.message);
     return -1;
   }
 

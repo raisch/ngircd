@@ -877,7 +877,7 @@ va_dcl
 
   /* RLR - WRITE TO MONITOR HERE */
   if( NGIRCd_Monitor ) {
-    Monitor_Write( Idx, buffer );
+    Monitor_Write( Idx, "out", buffer );
   }
 
 	len = strlcat( buffer, "\r\n", sizeof( buffer ));

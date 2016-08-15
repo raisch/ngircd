@@ -186,6 +186,11 @@ Parse_Request( CONN_ID Idx, char *Request )
 	if( NGIRCd_Sniffer ) Log( LOG_DEBUG, " <- connection %d: '%s'.", Idx, Request );
 #endif
 
+  /* RLR - WRITE TO MONITOR HERE */
+  if( NGIRCd_Monitor ) {
+    Monitor_Write( Idx, "in", Request );
+  }
+
 	Init_Request( &req );
 
 	/* remove leading & trailing whitespace */
