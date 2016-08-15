@@ -101,12 +101,16 @@ GLOBAL int
 Monitor_Write( int conn, char* msg ) {
 
   bson_error_t error;
-
+  bson_oid_t oid;
   bson_t *doc;
 
   Log(LOG_ALERT, "writing msg '%s' to db", msg);
 
-  doc = BCON_NEW ( "conn", BCON_INT32(conn), BCON_UTF8(msg) );
+  doc = bson_new ();
+  bson_oid_init (&oid, NULL);
+  BSON_APPEND_OID (doc, "_id", &oid);
+  BSON_APPEND_INT32(doc, "conn", conn);
+  BSON_APPEND_UTF8 (doc, "msg", msg);
 
   clrErrorMsg();
 
