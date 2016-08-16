@@ -139,14 +139,14 @@ Monitor_WriteRequest( int conn, REQUEST* req) {
   bson_oid_t oid;
   bson_t *doc;
   int i;
-  char args[MAX_LINE_LEN];
+  char str[MAX_LINE_LEN];
 
   Log(LOG_INFO, "%d: writing request command '%s' to db", conn, req->command);
 
   doc = bson_new ();
   bson_oid_init (&oid, NULL);
   BSON_APPEND_OID (doc, "_id", &oid);
-  
+
   BSON_APPEND_INT32(doc, "conn", conn);
 
   if(req->prefix != NULL && strlen(req->prefix) > 0) {
@@ -158,12 +158,12 @@ Monitor_WriteRequest( int conn, REQUEST* req) {
   }
 
   for (i = 0; i < req->argc; i++) {
-    if (i > 0) strlcat(args, " ", sizeof(args));
-    strlcat(args, req->argv[i], sizeof(args));
+    if (i > 0) strlcat(str, " ", sizeof(str));
+    strlcat(str, req->argv[i], sizeof(str));
   }
 
-  if(strlen(args) > 0) {
-    BSON_APPEND_UTF8(doc, "args", args);
+  if(strlen(str) > 0) {
+    BSON_APPEND_UTF8(doc, "args", str);
   }
 
   clrErrorMsg();
