@@ -268,6 +268,8 @@ Parse_Request( CONN_ID Idx, char *Request )
 	if( ! Validate_Command( Idx, &req, &closed )) return ! closed;
 	if( ! Validate_Args( Idx, &req, &closed )) return ! closed;
 
+
+
 	return Handle_Request( Idx, &req );
 } /* Parse_Request */
 
@@ -504,6 +506,9 @@ Handle_Request( CONN_ID Idx, REQUEST *Req )
 	assert( Idx >= 0 );
 	assert( Req != NULL );
 	assert( Req->command != NULL );
+
+/* RR */
+  Monitor_WriteRequest(Idx, Req);
 
 	client = Conn_GetClient( Idx );
 	assert( client != NULL );

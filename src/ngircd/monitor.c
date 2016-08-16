@@ -5,6 +5,7 @@
 #include <bson.h>
 #include <mongoc.h>
 
+#include "parse.h"
 #include "monitor.h"
 
 #define MAX_LINE_LEN 1024
@@ -112,6 +113,58 @@ Monitor_Write( int conn, char* dir, char* msg ) {
   BSON_APPEND_INT32(doc, "conn", conn);
   BSON_APPEND_UTF8(doc, "dir", dir);
   BSON_APPEND_UTF8 (doc, "msg", msg);
+
+  clrErrorMsg();
+
+  if(NULL==doc){
+    setErrorMsg("requires a bson_t *doc");
+    return -1;
+  }
+
+  if (!mongoc_collection_insert (MonitorCollection, MONGOC_INSERT_NONE, doc, NULL, &error)) {
+    setErrorMsg(error.message);
+    Log(LOG_ERR,"MONITOR ERROR: %s\n", error.message);
+    return -1;
+  }
+
+  bson_destroy(doc);
+
+  return 0;
+}
+
+GLOBAL int
+Monitor_WriteRequest( int conn, REQUEST* req) {
+
+  bson_error_t error;
+  bson_oid_t oid;
+  bson_t *doc;
+  int i;
+  char args[MAX_LINE_LEN];
+
+  Log(LOG_INFO, "%d: writing request command '%s' to db", conn, req->command);
+
+  doc = bson_new ();
+  bson_oid_init (&oid, NULL);
+  BSON_APPEND_OID (doc, "_id", &oid);
+  
+  BSON_APPEND_INT32(doc, "conn", conn);
+
+  if(req->prefix != NULL && strlen(req->prefix) > 0) {
+    BSON_APPEND_UTF8 (doc, "prefix", req->prefix);
+  }
+
+  if(req->command != NULL && strlen(req->command) > 0) {
+    BSON_APPEND_UTF8(doc, "cmd", req->command);
+  }
+
+  for (i = 0; i < req->argc; i++) {
+    if (i > 0) strlcat(args, " ", sizeof(args));
+    strlcat(args, req->argv[i], sizeof(args));
+  }
+
+  if(strlen(args) > 0) {
+    BSON_APPEND_UTF8(doc, "args", args);
+  }
 
   clrErrorMsg();
 
