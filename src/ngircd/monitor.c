@@ -5,6 +5,7 @@
 #include <bson.h>
 #include <mongoc.h>
 
+#include "conn.h"
 #include "client.h"
 #include "parse.h"
 #include "monitor.h"
