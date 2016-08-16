@@ -507,7 +507,7 @@ Handle_Request( CONN_ID Idx, REQUEST *Req )
 	assert( Req != NULL );
 	assert( Req->command != NULL );
 
-/* RR */
+  /* RR */
   Monitor_WriteRequest(Idx, Req);
 
 	client = Conn_GetClient( Idx );

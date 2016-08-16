@@ -111,10 +111,11 @@ Monitor_Write( int conn, char* dir, char* msg ) {
 
   doc = bson_new ();
   bson_oid_init (&oid, NULL);
-  BSON_APPEND_OID (doc, "_id", &oid);
+  BSON_APPEND_OID  (doc, "_id",  &oid);
+  BSON_APPEND_UTF8 (doc, "type", "msg");
   BSON_APPEND_INT32(doc, "conn", conn);
-  BSON_APPEND_UTF8(doc, "dir", dir);
-  BSON_APPEND_UTF8 (doc, "msg", msg);
+  BSON_APPEND_UTF8 (doc, "dir",  dir);
+  BSON_APPEND_UTF8 (doc, "msg",  msg);
 
   clrErrorMsg();
 
@@ -148,7 +149,7 @@ Monitor_WriteRequest( int conn, REQUEST* req) {
   doc = bson_new ();
   bson_oid_init (&oid, NULL);
   BSON_APPEND_OID (doc, "_id", &oid);
-
+  BSON_APPEND_UTF8 (doc, "type", "req");
   BSON_APPEND_INT32(doc, "conn", conn);
 
   if(req->prefix != NULL && strlen(req->prefix) > 0) {
